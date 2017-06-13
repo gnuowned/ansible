@@ -1,0 +1,19 @@
+[all]
+rbpi00 ansible_ssh_host=rbpi00 ansible_ssh_port=22
+rbpi01 ansible_ssh_host=rbpi01 ansible_ssh_port=22
+rbpi02 ansible_ssh_host=rbpi02 ansible_ssh_port=22
+rbpi03 ansible_ssh_host=rbpi03 ansible_ssh_port=22
+rbpi04 ansible_ssh_host=rbpi04 ansible_ssh_port=22
+carlota ansible_ssh_host=carlota ansible_ssh_port=22
+
+[master]
+rbpi00 ansible_ssh_host=rbpi00 ansible_ssh_port=22
+
+[workers]
+rbpi01 ansible_ssh_host=rbpi01 ansible_ssh_port=22
+rbpi02 ansible_ssh_host=rbpi02 ansible_ssh_port=22
+rbpi03 ansible_ssh_host=rbpi03 ansible_ssh_port=22
+rbpi04 ansible_ssh_host=rbpi04 ansible_ssh_port=22
+
+[carlota]
+carlota ansible_ssh_host=carlota ansible_ssh_port=22

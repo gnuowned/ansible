@@ -1,0 +1,17 @@
+---
+- name: Install Packages to all
+  hosts: all
+  sudo: True
+  tasks:
+    - name: creating ansible user
+      user:
+        name: ansible
+        comment: "Ansible User"
+        groups: users,sudo
+    - name: add to sudoers with no passwd
+      copy: src=files/00_ansible-nopasswd dest=/etc/sudoers.d/
+    - name: copying ssh public key
+      authorized_key:
+        user: ansible
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
