@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pi-hole-web-ingress
+  namespace: pi-hole
+spec:
+  rules:
+  - host: k8s-pi-hole.gnuowned.org
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: pi-hole-tcp
+          servicePort: http

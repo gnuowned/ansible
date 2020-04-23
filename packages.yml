@@ -1,19 +1,101 @@
 ---
 - name: Install Packages to all
   hosts: all
-  sudo: True
+  become: yes
+  become_user: root
+  become_method: sudo
+  vars:
+    ntp_server: [mx.pool.ntp.org, pool.ntp.org]
   tasks:
     - name: upgrade distribution
       apt:
         upgrade: dist
         update_cache: yes
+        autoremove: yes
+      become: yes
     - name: install vim
-      apt: 
+      apt:
         name: vim
-    - name: install htop
+      become: yes
+    - name: uninstall htop
       apt:
         name: htop
+        state: absent
+      become: yes
+    - name: install git
+      apt:
+        name: git
+      become: yes
     - name: uninstall nginx
       apt:
         name: nginx
         state: absent
+      become: yes
+    - name: install avahi-daemon
+      apt:
+        name: avahi-daemon
+      become: yes
+    - name: install cowsay
+      apt:
+        name: cowsay
+      become: yes
+    - name: install fortune
+      apt:
+        name: fortune
+      become: yes
+    - name: Configure cowsay
+      lineinfile:
+        path: /etc/bash.bashrc
+        line: "fortune | cowsay"
+    - name: Install NFS Common
+      apt:
+        name: nfs-common
+      become: yes
+    - name: Install Axel
+      apt:
+        name: axel
+      become: yes
+    - name: install NTP
+      apt:
+        name: ntp
+    - name: configure NTP
+      template: src=files/ntp.conf.j2 dest=/etc/ntp.conf
+      notify:
+        - restart ntp
+    - name: copy node_exporter for x86
+      copy:
+        src: files/node_exporter_x86
+        dest: /sbin/node_exporter
+        owner: root
+        group: root
+        mode: '0755'
+      when: ansible_architecture == "x86_64"
+      notify:
+        - restart node-exporter
+    - name: copy node-exporter.service for x86
+      copy:
+        src: files/node-exporter.service
+        dest: /etc/systemd/system/node-exporter.service
+        owner: root
+        group: root
+        mode: '0644'    
+      when: ansible_architecture == "x86_64"
+      notify:
+        - restart node-exporter
+  handlers:
+    - name: restart ntp
+      service:
+        name: ntp
+        state: restarted
+    - name: restart node-exporter
+      systemd:
+        name: node-exporter
+        daemon_reload: yes
+        state: restarted    
+
+- name: Upgrade Pi-Hole on DNS Servers
+  hosts: dns_servers
+  become: no
+  tasks:
+    - name: Upgrade Pi-Hole on DNS Servers
+      command: /usr/local/bin/pihole -up

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: default
+spec:
+  selector:
+    app.kubernetes.io/name: grafana
+  ports:
+  - name: web
+    port: 80
+    targetPort: 3000
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  namespace: default
+spec:
+  rules:
+  - host: k8s-grafana.gnuowned.org
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: grafana
+          servicePort: web

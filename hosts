@@ -1,19 +1,18 @@
 [all]
-rbpi00 ansible_ssh_host=rbpi00 ansible_ssh_port=22
-rbpi01 ansible_ssh_host=rbpi01 ansible_ssh_port=22
-rbpi02 ansible_ssh_host=rbpi02 ansible_ssh_port=22
-rbpi03 ansible_ssh_host=rbpi03 ansible_ssh_port=22
-rbpi04 ansible_ssh_host=rbpi04 ansible_ssh_port=22
-carlota ansible_ssh_host=carlota ansible_ssh_port=22
+unifi ansible_ssh_host=unifi-controller.local ansible_ssh_port=22
+zabbix ansible_ssh_host=zabbix.local ansible_ssh_port=22
+carlota ansible_ssh_host=carlota.local ansible_ssh_port=22
+roberto ansible_ssh_host=roberto.gnuowned.org ansible_ssh_port=22
+camaras ansible_ssh_host=camaras.local
+k8s-master ansible_ssh_host=k8s-master.gnuowned.org ansible_ssh_port=22
+k8s-node1 ansible_ssh_host=k8s-node1.gnuowned.org ansible_ssh_port=22
+k8s-node2 ansible_ssh_host=k8s-node2.gnuowned.org ansible_ssh_port=22
+rasp1 ansible_ssh_host=rasp1.gnuowned.org ansible_ssh_port=22
+rasp2 ansible_ssh_host=rasp2.gnuowned.org ansible_ssh_port=22
+rasp3 ansible_ssh_host=rasp3.gnuowned.org ansible_ssh_port=22
+rasp4 ansible_ssh_host=rasp4.gnuowned.org ansible_ssh_port=22
+pi-hole ansible_ssh_host=pi-hole.gnuowned.org ansible_ssh_port=22
 
-[master]
-rbpi00 ansible_ssh_host=rbpi00 ansible_ssh_port=22
-
-[workers]
-rbpi01 ansible_ssh_host=rbpi01 ansible_ssh_port=22
-rbpi02 ansible_ssh_host=rbpi02 ansible_ssh_port=22
-rbpi03 ansible_ssh_host=rbpi03 ansible_ssh_port=22
-rbpi04 ansible_ssh_host=rbpi04 ansible_ssh_port=22
-
-[carlota]
-carlota ansible_ssh_host=carlota ansible_ssh_port=22
+[dns_servers]
+rasp1 ansible_ssh_host=rasp1.gnuowned.org ansible_ssh_port=22
+pi-hole ansible_ssh_host=pi-hole.gnuowned.org ansible_ssh_port=22

@@ -1,0 +1,23 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: unifi-poller
+  labels:
+    app: unifi-poller
+spec:
+  replicas: 1
+  template:
+    containers:
+      - name: unifi-poller
+        image: golift/unifi-poller:latest
+        ports:
+        - containerPort: 9130
+        volumeMounts:
+        - name: config
+          mountPath: /config # Please change the destination you like the share to be mounted too  
+    volumes:
+    - name: config
+      nfs:
+        server: wdmycloud.gnuowned.org
+        path: /nfs/Public/kubernetes/unifi-poller/config
+

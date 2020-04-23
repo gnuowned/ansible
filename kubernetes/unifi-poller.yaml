@@ -1,0 +1,35 @@
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: unifi-poller
+  labels:
+    app: unifi-poller
+spec:      
+  containers:
+    - name: unifi-poller
+      image: golift/unifi-poller:latest
+      volumeMounts:
+       - name: config
+         mountPath: /etc/unifi-poller
+  volumes:
+   - name: config
+     nfs:
+       server: wdmycloud.gnuowned.org
+       path: /nfs/Public/kubernetes/unifi-poller/config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: unifi-poller
+  labels:
+    app: unifi-poller
+spec:
+  selector:
+    app: unifi-poller
+  ports:
+    - protocol: TCP
+      port: 9130
+      targetPort: 9130
+
+
